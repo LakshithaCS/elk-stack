@@ -1,0 +1,207 @@
+####################################################
+# Chapter: Aggregations
+
+#What are Aggregations?
+GET nutrition/_search
+{
+  "query" : {
+    "match_phrase": {
+      "ingredients": "olive oil"
+    }
+  },
+  "aggs": {
+    "my_avg_calories": {
+      "avg": {
+        "field": "calories"
+      }
+    }
+  }
+}
+
+GET nutrition/_search
+{
+  "size": 0, 
+  "query" : {
+    "match_phrase": {
+      "ingredients": "olive oil"
+    }
+  },
+  "aggs": {
+    "my_avg_calories": {
+      "avg": {
+        "field": "calories"
+      }
+    }
+  }
+}
+
+#Common Metrics Aggregations
+GET nutrition/_search
+{
+  "size" : 0,
+  "query" : {
+    "match": {
+      "ingredients": "sugar"
+    }
+  },
+  "aggs" : {
+    "my_sugar_calorie_average" : {
+      "avg": {
+        "field": "calories"
+      }
+    }
+  }
+}
+
+GET nutrition/_search
+{
+  "size" : 0,
+  "aggs" : {
+    "my_max_calorie_item" : {
+      "max": {
+        "field": "calories"
+      }
+    },
+    "my_min_calorie_item" : {
+      "min": {
+        "field": "calories"
+      }
+    }
+  }
+}
+
+#Find the item(s) with the most calories
+GET nutrition/_search
+{
+  "query" : {
+    "term": {
+      "calories": {
+        "value": 630
+      }
+    }
+  }
+}
+
+GET nutrition/_search
+{
+  "size" : 0,
+  "aggs" : {
+    "my_calorie_stats" : {
+      "stats": {
+        "field": "calories"
+      }
+    }
+  }
+}
+
+
+
+#The range Aggregation
+GET nutrition/_search
+{
+  "size" : 0,
+  "aggs" : {
+    "my_calorie_range_buckets" : {
+      "range": {
+        "field": "calories",
+        "ranges": [
+          {
+            "to": 100
+          },
+          {
+            "from": 100,
+            "to": 200
+          },
+          {
+            "from" : 200
+          }
+        ]
+      }
+    }
+  }
+}
+
+GET nutrition/_search
+{
+  "size" : 0,
+  "aggs" : {
+    "my_calorie_range_buckets" : {
+      "range": {
+        "field": "calories",
+        "ranges": [
+          {
+            "key" : "low_calorie", 
+            "to": 100
+          },
+          {
+            "key" : "medium_calorie", 
+            "from": 100,"to": 200
+          },
+          {
+            "key" : "high_calorie", 
+            "from" : 200
+          }
+        ]
+      }
+    }
+  }
+}
+
+GET nutrition/_search
+{
+  "size" : 0,
+  "aggs" : {
+    "my_calorie_range_buckets" : {
+      "range": {
+        "field": "calories",
+        "ranges": [
+          {"to": 100},
+          {"from": 100,"to": 200},
+          {"from" : 200}
+        ]
+      },
+      "aggs": {
+        "average_total_fat": {
+          "avg": {
+            "field": "total_fat"
+          }
+        }
+      }
+    }
+  }
+}
+
+#The date_range Aggregation
+GET stocks/_search
+{
+  "size": 0,
+  "aggs": {
+    "my_week_comparison": {
+      "date_range": {
+        "field": "trade_date",
+        "ranges": [
+          {
+            "from": "2010-01-01||-1w",
+            "to": "2010-01-01"
+          },
+          {
+            "from": "2010-01-01",
+            "to": "2010-01-01||+1w"
+          }
+        ]
+      },
+      "aggs": {
+        "my_total_volume": {
+          "sum": {
+            "field": "volume"
+          }
+        }
+      }
+    }}}
+
+
+
+
+
+
+

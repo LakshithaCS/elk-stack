@@ -1,0 +1,59 @@
+#Indexing Data
+DELETE my_first_index
+
+
+
+GET my_first_index/_settings
+
+PUT my_first_index/_doc/1
+{
+	"username":"harrison", 
+	"comment":"My favorite movie is Star Wars!"
+}
+
+POST my_first_index/_doc
+{
+  "username" : "maria",
+  "comment" : "The North Star is right above my house."
+}
+
+POST my_first_index/_doc
+{
+  "username" : "eniko",
+  "comment" : "My favorite movie star in Hollywood is Harrison Ford."
+}
+
+GET my_first_index/_doc/1
+
+#Searching Data
+GET my_first_index/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+
+GET my_first_index/_search
+
+#CRUD Operations
+PUT my_first_index/_doc/4
+{
+  "username" : "kimchy",
+  "comment" : "I like search!"
+}
+
+GET my_first_index/_doc/4
+
+#Update
+
+
+
+
+
+
+
+
+
+
+
+

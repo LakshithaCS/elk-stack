@@ -1,0 +1,27 @@
+#Analyzers
+GET _analyze
+{
+  "analyzer": "simple", 
+  "text": "My favorite movie is Star Wars!"
+}
+
+GET _analyze
+{
+  "analyzer": "stop", 
+  "text": "My favorite movie is Star Wars!"
+}
+
+GET _analyze
+{
+  "analyzer": "standard", 
+  "text": "My favorite movie is Star Wars!"
+}
+
+
+GET _analyze
+{
+  "analyzer": "keyword", 
+  "text": "My favorite movie is Star Wars!"
+}
+
+

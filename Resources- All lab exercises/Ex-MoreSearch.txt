@@ -1,0 +1,253 @@
+
+GET my_first_index/_search
+{
+  "query": {
+    "bool": {
+      "must": 
+        {"match": {"comment": "star"}},
+      "filter": 
+        {"match":{"comment":"favorite"}}
+    }
+  }
+}
+
+
+
+GET nutrition/_search
+{
+  "query" : {
+    "bool": {
+      "must": [
+        {"match": {
+          "item_name": "cookie"
+        }}
+      ],
+      "filter": {
+        "exists": {
+          "field": "ingredients"
+        }
+      }
+    }
+  }
+}
+
+
+#The multi_match Query
+GET nutrition/_search
+{
+  "query" : {
+    "multi_match": {
+      "query": "olive oil",
+      "fields": ["item_name", "ingredients"]
+    }
+  }
+}
+
+GET nutrition/_search
+{
+  "query" : {
+    "multi_match": {
+      "query": "olive oil",
+      "fields": ["item_name", "ingredients^2"]
+    }
+  }
+}
+
+
+
+#Fuzziness
+GET nutrition/_search
+{
+  "query" : {
+    "match": {
+      "ingredients" :  "sugar"
+    }
+  }
+}
+
+GET nutrition/_search
+{
+  "query" : {
+    "match": {
+      "ingredients" :  "suger"
+    }
+  }
+}
+
+GET nutrition/_search
+{
+  "query" : {
+    "match": {
+      "ingredients" : {
+        "query" : "suger",
+        "fuzziness": 1
+      }
+    }
+  }
+}
+
+
+
+#Sorting Results
+GET nutrition/_search
+{
+  "query" : {
+    "match": {
+      "ingredients": "chocolate"
+    }
+  },
+  "sort": [
+    {
+      "total_fat": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+
+GET nutrition/_search
+{
+  "query" : {
+    "match": {
+      "ingredients": "chocolate"
+    }
+  },
+  "sort": [
+    {
+      "servings_per_container": {
+        "order": "desc"
+      }
+    },
+    {
+      "_score" : {
+        "order" : "desc"
+      }
+    }
+  ]
+}
+
+GET nutrition/_search
+{
+  "query" : {
+    "match": {
+      "ingredients": "chocolate"
+    }
+  },
+  "sort": [
+    {
+      "servings_per_container": {
+        "order": "desc"
+      }
+    },
+    "_score"
+  ]
+}
+
+GET nutrition/_search
+{
+  "query" : {
+    "match": {
+      "ingredients": "chocolate"
+    }
+  },
+  "sort": [
+    "_doc"
+  ]
+}
+
+=====================================================================================
+
+#Sorting by Strings
+GET nutrition/_search
+{
+  "query": {
+    "match" : {
+      "item_name" : "yogurt"
+    }
+  },
+  "sort" : [
+    {
+      "brand_name.keyword" : {
+        "order" : "asc"
+      }
+    }
+  ]
+}
+
+================================================================================
+#Term Filters
+GET nutrition/_search
+{
+  "query": {
+    "term": {
+      "brand_name.keyword" : "Market Pantry"
+    }
+  }
+}
+
+GET nutrition/_search
+{
+  "query": {
+    "term": {
+      "brand_name.keyword" : "Market"
+    }
+  }
+}
+
+GET nutrition/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {"match": {
+          "ingredients": "syrup"
+        }}
+      ],
+      "filter": {
+        "term": {
+          "brand_name.keyword": "Market Basket"
+        }
+      }
+    }
+  }
+}
+
+GET nutrition/_search
+{
+  "query": {
+    "constant_score": {
+      "filter": {
+        "terms": {
+          "brand_name.keyword": [
+            "Market Basket",
+            "Nabisco",
+            "Barilla" 
+          ]
+        }
+      }
+    }
+  }
+}
+
+GET nutrition/_search
+{
+  "query": {
+    "bool": {
+      "must": 
+        {
+          "match": {
+            "item_name": "cookie"
+          }
+        }
+      ,
+      "filter": {
+        "wildcard": {
+          "brand_name.keyword": {
+            "value": "Ste*"
+          }
+        }   
+      }
+    }
+  }
+}
+

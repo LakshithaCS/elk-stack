@@ -1,0 +1,103 @@
+
+#  Mappings
+
+GET my_first_index/_mappings
+
+
+DELETE comments
+
+PUT comments/_doc/1
+{
+  "user" : "John",
+  "comment" : "Nice movie",
+  "comment_time" : "2023-12-08T15:31:18-07:00",
+  "rating" : 5
+}
+
+GET comments/_mappings
+
+PUT comments/_doc/2
+{
+    "num_of_views" : 430
+}
+
+PUT comments/_doc/3
+{
+    "comment_time" : "2023-12-08"
+}
+
+PUT comments/_doc/4
+{
+    "average_length" : "23.9"
+}
+
+GET comments/_mappings
+
+#Defining Explicit Mappings
+DELETE temp_comments
+
+PUT temp_comments/_doc/1
+{
+  "user" : "John",
+  "comment" : "Nice Movie",
+  "comment_time" : "2023-12-08T15:31:18-07:00",
+  "rating" : 5
+}
+
+GET temp_comments/_mapping
+
+DELETE comments
+PUT comments
+{
+  "mappings": {
+        "properties": {
+          "comment": {
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword",
+                "ignore_above": 256
+              }
+            }
+          },
+          "comment_time": {
+            "type": "date"
+          },
+          "rating": {
+            "type": "byte"
+          },
+          "user": {
+            "type": "keyword"
+          }
+        }
+      }
+}
+
+GET comments/_mapping
+
+PUT comments/_doc/1
+{
+  "user" : "John",
+  "comment" : "This is nice",
+  "comment_time" : "2016-11-06T15:31:18-07:00",
+  "rating" : 5
+}
+
+GET comments/_search
+{
+  "query": {
+    "match": {
+      "user": "ricardo"
+    }
+  }
+}
+
+GET comments/_search
+{
+  "query": {
+    "match": {
+      "user": "Ricardo"
+    }
+  }
+}
+

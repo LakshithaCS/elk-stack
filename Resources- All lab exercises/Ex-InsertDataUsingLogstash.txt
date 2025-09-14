@@ -1,0 +1,45 @@
+
+# Windows
+# Insert data using logstash
+
+# From the command prompt - Go to the directory containing logstash and datasets
+# e.g C:\ELK
+
+# Just change the path in the following commands:
+
+# 1. Insert nutrition data
+type datasets\nutrition\nutrition.csv | logstash-8.12.2\bin\logstash.bat -f C:\ELK\datasets\nutrition\nutrition.conf
+
+# 2. Insert product data
+type datasets\products\products.csv | logstash-8.12.2\bin\logstash.bat -f C:\ELK\datasets\products\products.conf
+
+# 3. Insert stocks data
+type datasets\stock_market\stocks.txt | logstash-8.12.2\bin\logstash.bat -f C:\ELK\datasets\stock_market\stocks.conf
+
+# 4. Insert logs data
+type datasets\logs-data| logstash-8.12.2\bin\logstash.bat -f C:\ELK\datasets\log-conf.conf
+
+==============================================================================================
+
+
+To make the commands work on both Linux and macOS, you need to make a few adjustments:
+
+Change Directory Paths: Replace the Windows-style directory paths (e.g., C:\ELK\datasets\nutrition\nutrition.conf) with Unix-style paths. Additionally, use forward slashes instead of backslashes.
+
+Replace logstash.bat with logstash: On Unix-based systems like Linux and macOS, you don't need to use the .bat extension. Simply use logstash to run Logstash.
+
+Here are the updated commands:
+
+# 1. Insert nutrition data
+cat datasets/nutrition/nutrition.csv | logstash-8.12.2/bin/logstash -f /path/to/nutrition.conf
+
+# 2. Insert product data
+cat datasets/products/products.csv | logstash-8.12.2/bin/logstash -f /path/to/products.conf
+
+# 3. Insert stocks data
+cat datasets/stock_market/stocks.txt | logstash-8.12.2/bin/logstash -f /path/to/stocks.conf
+
+# 4. Insert logs data
+cat datasets/logs-data | logstash-8.12.2/bin/logstash -f /path/to/log-conf.conf
+
+Replace /path/to/nutrition.conf, /path/to/products.conf, /path/to/stocks.conf, and /path/to/log-conf.conf with the actual paths to your Logstash configuration files. Also, replace /path/to/logstash-8.12.2 with the actual path to your Logstash installation directory.

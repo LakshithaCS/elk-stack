@@ -1,0 +1,130 @@
+#The match Query
+GET 
+
+GET my_first_index/_search
+{
+  "query": {
+    "match": {
+      "comment": {
+        "query": "favorite star",
+        "operator": "and"
+      }
+    }
+  }
+}
+
+
+#The match_phrase Query
+GET my_first_index/_search
+{
+  "query": {
+    "match_phrase": {
+      "comment": "north star"
+    }
+  }
+}
+
+GET my_first_index/_search
+{
+  "query": {
+    "match": {
+      "comment": "north star"
+    }
+  }
+}
+
+GET my_first_index/_search
+{
+  "query": {
+    "match_phrase": {
+      "comment": {
+        "query": "favorite star"
+      }
+    }
+  }
+}
+
+GET my_first_index/_search
+{
+  "query": {
+    "match_phrase": {
+      "comment": {
+        "query": "favorite star",
+        "slop" : 1
+      }
+    }
+  }
+}
+
+#The range Query
+
+GET stocks/_search
+{
+  "query": {
+    "range": {
+      "open": {
+        "gte": 50.00,
+        "lte": 60.00
+      }
+    }
+  }
+}
+
+
+
+GET my_first_index/_search
+{
+  "query" : {
+    "bool" : {
+      "must" : [
+        {"match" : {"comment" : "star"}},
+        {"match" : {"username" : "harrison"}}
+        ]
+    }
+  }
+}
+
+
+GET my_first_index/_search
+{
+  "query": {
+    "bool": {
+      "must": 
+        {"match": {"comment": "star"}},
+      "must_not": 
+        {"match":{"comment":"wars"}}
+    }
+  }
+}
+
+GET my_first_index/_search
+{
+  "query": {
+    "bool": {
+      "must": 
+        {"match": {"comment":  "star"}},
+      "should": 
+        {"match":{"comment":"wars"}}
+    }
+  }
+}
+
+
+GET my_first_index/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {"match": {
+          "comment": "movie star"
+        }}
+      ],
+      "should": [
+        {"match_phrase": {
+          "comment": "movie star"
+        }}
+      ]
+    }
+  }
+}
+

@@ -1,0 +1,83 @@
+# STEP 1: Create Index with custom mapping
+
+curl -XPUT http://localhost:9200/us_large_cities -d '
+{
+    "mappings": {
+            "properties": {
+                "city": {"type": "text"},
+                "state": {"type": "text"},
+                "location": {"type": "geo_point"}
+            }
+        }
+}
+
+==========================================================================================================
+# STEP 2: Insert records
+ Run InsertDataScript in dev tool
+
+
+
+
+==================================================================================================================
+# STEP 3: Spatial Query- Find points within 20 km
+GET /us_large_cities/_search
+{
+    "query": {
+        "bool" : {
+            "must" : {
+                "match_all" : {}
+            },
+            "filter" : {
+                "geo_distance" : {
+                    "distance" : "20km",
+                    "location" : {
+                        "lat" : 37.9174,
+                        "lon" : -122.3050
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+# Spatial Query 2- Find points within 20 km and sort in ascending order of distance
+
+GET /us_large_cities/_search
+{
+    "sort" : [
+      {
+          "_geo_distance" : {
+              "location" : {
+                    "lat" : 37.9174,
+                    "lon" : -122.3050
+              }, 
+              "order" : "asc",
+              "unit" : "km"
+          }
+      }
+  ],
+    
+    "query": {
+        "bool" : {
+            "must" : {
+                "match_all" : {}
+            },
+            "filter" : {
+                "geo_distance" : {
+                    "distance" : "20km",
+                    "location" : {
+                        "lat" : 37.9174,
+                        "lon" : -122.3050
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
+

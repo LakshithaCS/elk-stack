@@ -1,0 +1,15 @@
+Step 1: Create a directory which will contain logs file
+        e.g C:\logs
+
+STEP 2: Download Filebeat and unzip
+
+STEP 3: Modify input and output in filebeat.yml
+
+STEP 4: Run the comband form filebeat dir
+       .\filebeat.exe -c filebeat.yml
+       .\filebeat -c filebeat.yml -e (if above query doesnot work, try this)
+
+STEP 5: Put log file in the diretory and observe
+        ingestion in Kibana
+
+

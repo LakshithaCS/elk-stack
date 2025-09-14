@@ -1,0 +1,15 @@
+DELETE customers
+
+POST _bulk
+{"create" : {"_index" : "customers", "_id":102}}
+{"firstname" : "Maureen","lastname" : "O'Hara","address" : "12 Elm St","city":"Brooklyn"}
+{"index" : {"_index" : "customers", "_id":103}}
+{"firstname" : "Lucy","lastname" : "Liu","address" : "39 Pine Tree Ln","city":"Albany"}
+{"delete" : {"_index" : "customers", "_id":104}}
+{"update" : {"_index" : "customers",  "_id":103}}
+{"doc" : {"firstname" : "Lucille"}}
+
+GET customers/_doc/102
+
+
+

@@ -1,0 +1,43 @@
+PUT my_second_index
+{
+  "settings" : {
+    "number_of_shards": 4,
+    "number_of_replicas": 1
+  }
+}
+
+POST my_second_index/_doc
+{
+  "name": "Calvin"
+}
+
+
+GET my_second_index/_search 
+{
+  "query": {
+    "match": {
+      "name": "Calvin"
+    }
+  }
+}
+
+GET my_second_index/_settings
+
+PUT my_first_index/_settings
+{
+   "number_of_replicas": 3
+  
+}
+
+
+PUT my_first_index/_settings
+{
+   "number_of_replicas": 0
+}
+
+GET _cluster/allocation/explain
+{
+  "index" : "my_first_index",
+  "shard": 0,
+  "primary": false
+}

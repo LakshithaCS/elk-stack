@@ -1,0 +1,22 @@
+GET _cat/health?v
+GET _cat/indices?v
+GET _cat/count?v
+GET _cat/nodes?v
+GET _cat/nodes?v&h=ip,port
+GET _cat/segments?v
+GET _cat/shards?v
+GET _cat/thread_pool?v
+GET _cat/fielddata?v
+
+GET _cluster/health
+GET _cluster/state
+GET _cluster/stats
+GET _cluster/allocation/explain
+{
+  "index" : "nutrition",
+  "shard": 0,
+  "primary": false
+}
+
+GET _nodes
+GET _nodes/stats

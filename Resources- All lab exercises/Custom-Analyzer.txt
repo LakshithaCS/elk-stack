@@ -1,0 +1,35 @@
+PUT test_index
+{
+  "settings": {
+    "analysis": {
+      "char_filter": {
+        "cpp_filter" : {
+          "type" : "mapping",
+          "mappings" : ["C++ => cpp", "c++ => cpp"]
+        }
+      }, 
+      "filter": {
+        "my_stopwords" : {
+          "type" : "stop",
+          "stopwords" : ["my", "is"]
+        }
+      }, 
+      "analyzer": {
+        "my_custom_analyzer" : {
+           "char_filter": ["html_strip", "cpp_filter"],
+           "tokenizer" : "standard",
+           "filter" : ["lowercase","my_stopwords", "snowball"]
+        }
+      }
+    }
+  }
+}
+
+GET test_index/_settings
+
+POST test_index/_analyze
+{
+  "analyzer": "my_custom_analyzer", 
+  "text" : "C++ is my favorite language."
+}
+

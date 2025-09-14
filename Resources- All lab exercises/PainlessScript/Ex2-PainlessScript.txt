@@ -1,0 +1,31 @@
+# Add Scripted Field in Kibana (Index Pattern - Management)
+def now = new Date().getTime();
+def createdOn =  doc['Created on'].value.getMillis();
+return (now-createdOn)/(1000*60*60);
+
+==============================================================================
+# Add Scripted field in DSL- Query
+
+GET ticket/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {"match": {"Status": "Unassigned"}},
+        {"match": {"Priority": 1}}
+      ]
+    }
+  },
+  "script_fields": {
+    "elapsedTime": {
+      "script": {
+        "lang": "painless",
+        "source": "def createdOn =  doc['Create on'].value.getMillis(); def now = new Date().getTime(); return (now - createdOn) / (1000*60*60);"
+      }
+    }
+  }
+}
+
+
+==================================================================================
+

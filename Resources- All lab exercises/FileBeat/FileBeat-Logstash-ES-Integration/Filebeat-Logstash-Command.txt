@@ -1,0 +1,1 @@
+logstash-8.12.2\bin\logstash.bat -f C:\ELK\datasets\log-conf-filebeat-Input.conf
