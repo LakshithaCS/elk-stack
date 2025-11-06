@@ -1,4 +1,4 @@
-## Elasticsearch _analyze API Example
+## Elasticsearch _analyze API
 
 The _analyze API in Elasticsearch helps you understand how text is processed and broken down into tokens by a specific analyzer.
 It’s commonly used to debug or inspect how analyzers behave before defining them in an index.
